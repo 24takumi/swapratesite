@@ -1,5 +1,6 @@
 
   <?php
+  //ユーザー名を返します
   function username($data){
   //データベースへの接続(PDOオブジェクトの生成)
   $dsn = 'データベース名';

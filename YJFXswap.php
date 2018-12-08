@@ -126,7 +126,6 @@
 
   <?php //今日の日付
   $current_date=date("d");
-  //echo $current_date;
    ?>
 
   <?php
@@ -144,26 +143,15 @@
   $str = preg_replace('/\s(?=\s)/', '', $str);
   //取引日で分割→11月で分割→" "で分割
   //分割した配列をさらに1から順に再配列
-  //var_dump($str);
   $m=0;
   $split1=explode("取引",$str);
   $cnt1=count($split1);
-  //echo $cnt1."<br>\n";
-  //var_dump($split1);
 
   for ($i=1; $i <$cnt1 ; $i++) {//$iを1から始めることで最初の空白の配列をループしない
     $split2=explode("11月",$split1[$i]);
     $cnt2=count($split2);
-    //var_dump($split2);
-    //echo $cnt2."<br>\n";
     for ($j=1; $j <$cnt2 ; $j++) {//$jを1から始めることで列名の配列をループしない
-      //echo $split2[$j]."<br>\n";
       $split3=explode(' ',$split2[$j]);
-      //$cnt3=count($split3);
-      //var_dump($split3);
-      //echo $cnt3."<br>\n";
-      //$flg=0;
-
       if($j>=1){
         if ($i==1) {
           $sp1=USDJPYsp;
@@ -179,15 +167,6 @@
           $buy4=AUDJPYbuy;
           $sell4=AUDJPYsell;
         }elseif($i==2){
-          /*if($flg==0){
-            for ($a=0; $a <=12 ; $a++) {
-              var_dump($split3[$a]);
-              if ($a==12) {
-                echo "<br>";
-                $flg=1;
-              }
-            }
-          }*/
           $sp1=NZDJPYsp;
           $buy1=NZDJPYbuy;
           $sell1=NZDJPYsell;

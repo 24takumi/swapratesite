@@ -49,14 +49,10 @@
       		if(($i+2)%6 == 0){
       			$split1=explode(':',$split[$i]);
       			$split2=explode('"',$split1[1]);
-      			$asks[$m] = $split2[1]/*."<br>\n"*/;//ask
+      			$asks[$m] = $split2[1];//ask
             $m=$m+1;
       		}
       	}
-
-        //print_r($html);
-        //->find(".fakeContainer")->find(".table")
-        //find(".table")->find("tr:eq(3)")->find("td:eq(1)")
 
         for ($i=1; $i <=24 ; $i++) {
           $sql=$pdo->prepare("INSERT INTO exchange(date,pair,bid,ask) VALUES(:date,:pair,:bid,:ask)");

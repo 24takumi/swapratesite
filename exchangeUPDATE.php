@@ -37,7 +37,7 @@ for ($i=0; $i <$cnt ; $i++) {
   if(($i+2)%6 == 0){
     $split1=explode(':',$split[$i]);
     $split2=explode('"',$split1[1]);
-    $asks[$m] = $split2[1]/*."<br>\n"*/;//ask
+    $asks[$m] = $split2[1];//ask
     $m=$m+1;
   }
 }
@@ -52,7 +52,6 @@ for ($i=1; $i <=24 ; $i++) {
   $stmt->bindParam(2, $pair, PDO::PARAM_STR);
   $stmt->bindParam(3, $bid, PDO::PARAM_STR);
   $stmt->bindParam(4, $ask, PDO::PARAM_STR);
-  //$result=$pdo->query($sql);
   $stmt->execute();
 }
  ?>

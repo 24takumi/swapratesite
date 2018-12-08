@@ -94,7 +94,6 @@ require "../logon.php";
        $sql->bindParam(':username',$username,PDO::PARAM_STR);
 
        $id_max = intval($pdo->query("SELECT max(id) FROM $table_name")->fetchColumn());//動作確認済み
-       //echo $id_max;
        $id=$id_max+1;
        if(empty($_POST['anonymous'])){
          $name=username($_SESSION['bridgename']);

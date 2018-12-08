@@ -26,11 +26,7 @@
     $stmt->execute(); //実行
     // データを取得
 	  $results = $stmt->fetch(PDO::FETCH_ASSOC);
-    //値の確認用
-      /*echo $results['id'].',';
-      echo $results['name'].',';
-      echo $results['password'].',';
-      echo $results['salt'].'<br>';*/
+    
     $PW=$results['password'];
     $salt=$results['salt'];
     $encrypted_password = crypt($_POST['password'], $salt); //入力パスワードとDBのソルトでハッシュ化
