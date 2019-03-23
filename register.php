@@ -1,3 +1,7 @@
+<?php
+//セッションスタートの前にhtmlを出力してはいけない
+session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
 <!--dir="ltr"は左から右に読む言語との宣言-->
@@ -7,11 +11,10 @@
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <?php
-  	//データベースへの接続(PDOオブジェクトの生成)
-  	$dsn = 'データベース名';
-  	$user = 'ユーザー名';
-  	$password = 'パスワード';
-  	$pdo = new PDO($dsn,$user,$password);
+  $dsn = 'データベース名';
+  $user = 'ユーザー名';
+  $password = 'パスワード';
+  $pdo = new PDO($dsn,$user,$password);
 
   	//テーブルの作成
   	$sql="CREATE TABLE passwordmaster"
@@ -50,7 +53,7 @@
           $encrypted_password = crypt($password, $salt); // 暗号化される（もっと強くしたければこれだけではダメですが、基本はcryptだと思います）
           $sql->execute();
 
-        	header( 'Location: http://tt-527.99sv-coco.com/registerok.php' ) ;
+        	header( 'Location: http://n24xfree.php.xdomain.jp/public_html/registerok.php' ) ;
         	exit ;
         }else{
           $error=1;
@@ -67,13 +70,13 @@
   <body>
     <div class="pagebody">
       <div class="header">
-        <div class="header-logo"><a href="http://tt-527.99sv-coco.com/mission_6.php">FXスワッパ―'s</a></div>
+        <div class="header-logo"><a href="http://n24xfree.php.xdomain.jp/public_html/mission_6.php">FXスワッパ―'s</a></div>
         <div class="header-list">
           <ul>
-            <li id="menu01"><a href="http://tt-527.99sv-coco.com/bulletin_board.php">掲示板</a></li>
-            <li id="menu02"><a href="http://tt-527.99sv-coco.com/swap_rate.php">スワップ金利比較</a></li>
-            <li id="menu03"><a href="http://tt-527.99sv-coco.com/login.php">ログイン</a></li>
-            <li id="menu04"><a href="http://tt-527.99sv-coco.com/register.php">ユーザー登録</a></li>
+            <li id="menu01"><a href="http://n24xfree.php.xdomain.jp/public_html/bulletin_board.php">掲示板</a></li>
+            <li id="menu02"><a href="http://n24xfree.php.xdomain.jp/public_html/swap_rate.php">スワップ比較</a></li>
+            <li id="menu03"><a href="http://n24xfree.php.xdomain.jp/public_html/login.php">ログイン</a></li>
+            <li id="menu04"><a href="http://n24xfree.php.xdomain.jp/public_html/register.php">ユーザー登録</a></li>
           </ul>
         </div>
         <div class="header-username">
@@ -82,7 +85,7 @@
           require "logon.php";
           echo username($_SESSION['bridgename']);
            ?>
-          /<a href="http://tt-527.99sv-coco.com/logout.php">ログアウト</a>
+          /<a href="http://n24xfree.php.xdomain.jp/public_html/logout.php">ログアウト</a>
         </div>
       </div>
       <br>

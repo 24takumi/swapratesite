@@ -50,9 +50,7 @@
           <input type="hidden" name="flag" value="1">
       	</form>
         <?php
-        //userのidの呼び出し
         $name=$_SESSION['bridgename'];
-        //echo $name;
         //  SQL文 :nameは、名前付きプレースホルダ
         $sql='SELECT*FROM passwordmaster where name=:name';
         // プリペアドステートメントを作成
@@ -88,6 +86,7 @@
               $sql->bindParam(':userid',$userid,PDO::PARAM_STR);
 
               $id_max = intval($pdo->query("SELECT max(id) FROM suremanager")->fetchColumn());
+              //echo $id_max;
               $id=$id_max+1;
               $category=$_POST['category'];
               $sure_name=$_POST['sure_name'];

@@ -7,51 +7,35 @@
     <link rel="stylesheet" href="stylesheet.css">
   </head>
 <?php
-//データベースへの接続(PDOオブジェクトの生成)
 $dsn = 'データベース名';
-$user = 'tt-527.99sv-coco';
+$user = 'ユーザー名';
 $password = 'パスワード';
 $pdo = new PDO($dsn,$user,$password);
 
-require_once("./phpQuery-onefile.php");
-$html = file_get_contents("https://www.gaitameonline.com/rateaj/getrate");
-$array = phpQuery::newDocument($html)->text();
-$split=explode(',',$array);
-$cnt=count($split);
-$j=1;
-$k=1;
-$m=1;
-for ($i=0; $i <$cnt ; $i++) {
-  if(($i+4)%6 == 0){
-    $split1=explode(':',$split[$i]);
-    $split2=explode('"',$split1[1]);
-    $bids[$j] = $split2[1];//bid
-    $j=$j+1;
-  }
-  if (($i+3)%6 == 0) {
-    $split1=explode(':',$split[$i]);
-    $split2=explode('"',$split1[1]);
-    $pairs[$k] = $split2[1];//pair
-    $k=$k+1;
-  }
-  if(($i+2)%6 == 0){
-    $split1=explode(':',$split[$i]);
-    $split2=explode('"',$split1[1]);
-    $asks[$m] = $split2[1];//ask
-    $m=$m+1;
-  }
-}
-for ($i=1; $i <=24 ; $i++) {
+$url = "https://www.gaitameonline.com/rateaj/getrate";
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_HEADER, false);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+$json = curl_exec($ch);
+curl_close($ch);
+
+$result = json_decode($json, true);
+
+for($j=0;$j<=23;$j++){
   $date=date("Y/m/d H:i:s");
-  $pair=$pairs[$i];
-  $bid=$bids[$i];
-  $ask=$asks[$i];
+  $pair=$result["quotes"][$j]["currencyPairCode"];
+  $bid=$result["quotes"][$j]["bid"];
+  $ask=$result["quotes"][$j]["ask"];
   $sql="UPDATE exchange set date='$date',bid='$bid',ask='$ask' where pair='$pair'";
   $stmt=$pdo->prepare($sql);
   $stmt->bindParam(1, $date, PDO::PARAM_STR);
   $stmt->bindParam(2, $pair, PDO::PARAM_STR);
   $stmt->bindParam(3, $bid, PDO::PARAM_STR);
   $stmt->bindParam(4, $ask, PDO::PARAM_STR);
+  //$result=$pdo->query($sql);
   $stmt->execute();
 }
  ?>
