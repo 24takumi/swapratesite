@@ -5,6 +5,7 @@
     <meta charset="utf-8">
   </head>
   <?php
+  //DBへ接続
   $dsn = 'データベース名';
   $user = 'ユーザー名';
   $password = 'パスワード';
@@ -97,7 +98,6 @@
   $d->modify('+1 month -1 day');
   $end_date=$d->format('d');
   $current_month=$d->format('m');
-  $current_month_nonzero=$d->format('n');
   $res = intval($pdo->query("SELECT max(day) FROM YJFX where '" . $current_month . "' ")->fetchColumn());
   if($res<$end_date){
     for ($i=1; $i <=$end_date ; $i++) {
@@ -126,21 +126,11 @@
 
   <?php //今日の日付
   $current_date=date("d");
-  //echo $current_date;
    ?>
 
   <?php
   require_once("./phpQuery-onefile.php");
-  $url = "https://www.yjfx.jp/gaikaex/mark/swap/calendar.php";
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $url);
-  curl_setopt($ch, CURLOPT_HEADER, false);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-  $html = curl_exec($ch);
-  curl_close($ch);
-
-  //$html = file_get_contents("https://www.yjfx.jp/gaikaex/mark/swap/calendar.php");
+  $html = file_get_contents("https://www.yjfx.jp/gaikaex/mark/swap/calendar.php");
   $array = phpQuery::newDocument($html)->find(".tbl_list")->text();
   // 正規表現
   $pattern = "#\n|\r\n|\r#";
@@ -153,26 +143,15 @@
   $str = preg_replace('/\s(?=\s)/', '', $str);
   //取引日で分割→11月で分割→" "で分割
   //分割した配列をさらに1から順に再配列
-  //var_dump($str);
   $m=0;
   $split1=explode("取引",$str);
   $cnt1=count($split1);
-  //echo $cnt1."<br>\n";
-  //var_dump($split1);
 
   for ($i=1; $i <$cnt1 ; $i++) {//$iを1から始めることで最初の空白の配列をループしない
-    $split2=explode($current_month_nonzero."月",$split1[$i]);
+    $split2=explode("11月",$split1[$i]);
     $cnt2=count($split2);
-    //var_dump($split2);
-    //echo $cnt2."<br>\n";
     for ($j=1; $j <$cnt2 ; $j++) {//$jを1から始めることで列名の配列をループしない
-      //echo $split2[$j]."<br>\n";
       $split3=explode(' ',$split2[$j]);
-      //$cnt3=count($split3);
-      //var_dump($split3);
-      //echo $cnt3."<br>\n";
-      //$flg=0;
-
       if($j>=1){
         if ($i==1) {
           $sp1=USDJPYsp;
@@ -188,15 +167,6 @@
           $buy4=AUDJPYbuy;
           $sell4=AUDJPYsell;
         }elseif($i==2){
-          /*if($flg==0){
-            for ($a=0; $a <=12 ; $a++) {
-              var_dump($split3[$a]);
-              if ($a==12) {
-                echo "<br>";
-                $flg=1;
-              }
-            }
-          }*/
           $sp1=NZDJPYsp;
           $buy1=NZDJPYbuy;
           $sell1=NZDJPYsell;
@@ -271,11 +241,11 @@
           $sp3s=$split3[7];
           $buy3s=$split3[8];
           $sell3s=$split3[9];
-          /*if($i==2){
+          if($i==2){
             echo $sp3."=".$sp3s.",";
             echo $buy3."=".$buy3s.",";
             echo $sell3."=".$sell3s."<br>";
-          }*/
+          }
           $sp4s=$split3[10];
           $buy4s=$split3[11];
           $sell4s=$split3[12];
