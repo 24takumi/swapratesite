@@ -127,7 +127,7 @@ require "../logon.php";
         <div class="header-list">
           <ul>
             <li id="menu01"><a href="http://tt-527.99sv-coco.com/bulletin_board.php">掲示板</a></li>
-            <li id="menu02"><a href="http://tt-527.99sv-coco.com/swap_rate.php">スワップ金利比較</a></li>
+            <li id="menu02"><a href="http://tt-527.99sv-coco.com/swap_rate.php">スワップ比較</a></li>
             <li id="menu03"><a href="http://tt-527.99sv-coco.com/login.php">ログイン</a></li>
             <li id="menu04"><a href="http://tt-527.99sv-coco.com/register.php">ユーザー登録</a></li>
           </ul>

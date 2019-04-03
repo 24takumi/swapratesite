@@ -19,7 +19,7 @@
         <div class="header-list">
           <ul>
             <li id="menu01"><a href="http://tt-527.99sv-coco.com/bulletin_board.php">掲示板</a></li>
-            <li id="menu02"><a href="http://tt-527.99sv-coco.com/swap_rate.php">スワップ金利比較</a></li>
+            <li id="menu02"><a href="http://tt-527.99sv-coco.com/swap_rate.php">スワップ比較</a></li>
             <li id="menu03"><a href="http://tt-527.99sv-coco.com/login.php">ログイン</a></li>
             <li id="menu04"><a href="http://tt-527.99sv-coco.com/register.php">ユーザー登録</a></li>
           </ul>
@@ -50,7 +50,12 @@
           <input type="hidden" name="flag" value="1">
       	</form>
         <?php
+        //全部表示できた！
+        //echo $_POST['category'];
+        //echo $_POST['sure_name'];
+        //userのidの呼び出し
         $name=$_SESSION['bridgename'];
+        //echo $name;
         //  SQL文 :nameは、名前付きプレースホルダ
         $sql='SELECT*FROM passwordmaster where name=:name';
         // プリペアドステートメントを作成
@@ -60,6 +65,11 @@
         $stmt->execute(); //実行
         // データを取得
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        //値の確認用
+          /*echo $results['id'].',';
+          echo $results['name'].',';
+          echo $results['password'].',';
+          echo $results['salt'].'<br>';*/
 
         //テーブルの作成
         $sql="CREATE TABLE suremanager"
@@ -95,6 +105,7 @@
               $sql->execute();
 
               $sure_name=$_POST['category']."_".$id;
+              //echo $sure_name;
               // ファイルをsureディレクトリにコピーする
               copy('bulletin_sample.php', 'sure/bulletin_sample.php');
               chmod('sure/bulletin_sample.php',0777);
